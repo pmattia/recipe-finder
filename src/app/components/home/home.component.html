@@ -1,0 +1,21 @@
+<mat-form-field>
+    <mat-label>Recipe Name</mat-label>
+    <input #input matInput 
+        placeholder="Ex. Pizza" 
+        (keydown.enter)="onSearchRecipe(input.value)"
+        [formControl]="searchInput" 
+        [matAutocomplete]="auto">
+    @if(store.loading()) {
+    <mat-spinner matSuffix diameter="20"></mat-spinner>
+    }
+    @else {
+    <mat-icon matSuffix fontIcon="search"></mat-icon>
+    }
+
+    <mat-autocomplete #auto="matAutocomplete">
+        @for (suggestedRecipes of suggestedRecipes$ | async; track suggestedRecipes.id) {
+        <mat-option [value]="suggestedRecipes.name" (onSelectionChange)="onSelectSuggestion(suggestedRecipes)"
+            (click)="onSelectSuggestion(suggestedRecipes)">{{suggestedRecipes.name}}</mat-option>
+        }
+    </mat-autocomplete>
+</mat-form-field>

@@ -1,0 +1,33 @@
+@if(store.searchQuery()){
+<a [routerLink]="['/recipes', store.searchQuery()]">Back to Recipes</a>
+}
+
+@if(recipe$ | async; as recipe) {
+    @if(store.loading()) {
+        <mat-spinner matSuffix diameter="20"></mat-spinner>
+    }
+    <h2>{{recipe.name}}</h2>
+    @if(!store.isRecipeFavourite(recipe.id)){
+        <button mat-button color="info" (click)="onAddFavourite(recipe)">
+            <mat-icon>favorite_border</mat-icon>
+        </button>
+    }@else {
+        <button mat-button color="info" (click)="onRemoveFavourite(recipe)">
+            <mat-icon>favorite</mat-icon>
+        </button>
+    }
+    <p>Category: {{recipe.category}}</p>
+    <p>Area: {{recipe.area}}</p>
+    <p>Ingredients</p>
+    <ul>
+        @for(ingredient of recipe.ingredients; track ingredient.name) {
+            <li>{{ingredient.name}} - {{ingredient.measure}}</li>
+        }
+    </ul>
+
+    <p>{{recipe.instructions}}</p>
+
+    <div style="position: relative; width: 100%; height: 250px;">
+        <img [ngSrc]="recipe.thumb" fill alt="{{recipe.name}} image" style="object-fit: cover;">
+    </div>
+}

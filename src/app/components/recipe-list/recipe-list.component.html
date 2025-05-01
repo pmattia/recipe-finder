@@ -1,0 +1,25 @@
+
+@if(recipes$ | async; as recipes) {
+    @if(recipes.length == 0) {
+        <p>No recipes found</p>
+    } @else {
+        @if(store.loading()) {
+            <mat-spinner matSuffix diameter="20"></mat-spinner>
+            }
+        <p>{{recipes.length}} recipes found</p>
+        @for (recipe of (recipes$ | async); track recipe.id) {
+            <mat-card>
+                <strong>{{recipe.name}}</strong>
+                <p matLine>Category: {{recipe.category}}</p>
+                <recipe-thumb [recipe]="recipe"></recipe-thumb>
+                <button mat-button color="info" [routerLink]="['/recipe', recipe.id]">
+                    Details
+                    
+                </button>
+            </mat-card>
+            }
+    }
+    
+}
+
+
