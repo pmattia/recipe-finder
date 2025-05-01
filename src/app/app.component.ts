@@ -7,10 +7,9 @@ import { RecipeFinderStore } from './store/recipe-finder.store';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet
-    , MatIcon
-    , RouterModule
-    , MatBadge],
+  imports: [
+    RouterOutlet
+    , RouterModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

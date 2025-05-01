@@ -1,4 +1,18 @@
 
+
+<div class="app-header">
+    <h1>
+        <a class="mat-mdc-button .mdc-button" matRipple  [routerLink]="['/']">
+            <img src="/assets/logo.svg" height="30" alt="Recipe finder">
+            <img height="36" alt="Recipe Finder" src="/assets/reciepe-finder.svg">    
+        </a>
+    </h1>
+    <button [routerLink]="['/favourites']" 
+        mat-button color="primary">
+        <mat-icon>favorite</mat-icon>favourites
+    </button>
+</div>
+
 @if(recipes$ | async; as recipes) {
     @if(recipes.length == 0) {
         <p>No recipes found</p>

@@ -1,0 +1,24 @@
+
+h1 {
+
+    > a {
+        display: flex;
+        gap: 1rem;
+        padding-top: .5rem;
+        border: 1px solid transparent;
+        &:hover{
+            // transition: all 0.3s ease-in-out;
+            border:1px solid var(--mat-sys-primary);
+
+        }
+        * {
+            display: flex;
+        }
+    }
+}
+.app-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: auto;
+}

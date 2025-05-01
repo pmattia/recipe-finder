@@ -4,14 +4,8 @@
     <a (click)="onRestart()">Restart</a>
   }
   @else{
-    <h1><a [routerLink]="['/']">Recipe Finder</a></h1>
-    <button mat-button color="info" matBadge="{{store.favouriteRecipes().length}}"  [routerLink]="['/favourites']">
-      <mat-icon>favorite</mat-icon>      
-    </button>
     
-   
     
       <router-outlet />
-    
   }
 </div>

@@ -8,6 +8,8 @@ import { RecipePreview } from '../../models/recipe-preview.model';
 import { RecipeThumbComponent } from '../recipe-thumb/recipe-thumb.component';
 import { RecipeFinderStore } from '../../store/recipe-finder.store';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatIcon } from '@angular/material/icon';
+import { MatRipple } from '@angular/material/core';
 
 @Component({
   selector: 'recipe-list',
@@ -18,6 +20,8 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
     , AsyncPipe
     , RecipeThumbComponent
     , MatProgressSpinner
+    , MatIcon
+    , MatRipple
   ],
   templateUrl: './recipe-list.component.html',
   styleUrl: './recipe-list.component.scss'

@@ -1,21 +1,20 @@
-<mat-form-field>
-    <mat-label>Recipe Name</mat-label>
-    <input #input matInput 
-        placeholder="Ex. Pizza" 
-        (keydown.enter)="onSearchRecipe(input.value)"
-        [formControl]="searchInput" 
-        [matAutocomplete]="auto">
-    @if(store.loading()) {
-    <mat-spinner matSuffix diameter="20"></mat-spinner>
-    }
-    @else {
-    <mat-icon matSuffix fontIcon="search"></mat-icon>
-    }
+<h1>
+    <img src="/assets/logo.svg" width="41" height="43" alt="Recipe finder">
+    <img width="285" height="62" alt="Recipe Finder" src="/assets/reciepe-finder.svg">    
+</h1>
+<p>
+    Got some ingredients in the fridge or a dish in mind?<br>
+    <strong>Type it here and discover what you can cook!</strong>
+</p>
+<search-recipe></search-recipe>
+@if(store.favouriteRecipes().length > 0) {
+    <div class="favourite-recipes">
+        <p>Or you can check your </p>
+    <button [routerLink]="['/favourites']" 
+        mat-button color="primary">
+        <mat-icon>favorite</mat-icon>favourite recipes
+    </button>
+    </div>
+}
 
-    <mat-autocomplete #auto="matAutocomplete">
-        @for (suggestedRecipes of suggestedRecipes$ | async; track suggestedRecipes.id) {
-        <mat-option [value]="suggestedRecipes.name" (onSelectionChange)="onSelectSuggestion(suggestedRecipes)"
-            (click)="onSelectSuggestion(suggestedRecipes)">{{suggestedRecipes.name}}</mat-option>
-        }
-    </mat-autocomplete>
-</mat-form-field>
+<p class="hint">This service is only available in English.</p>

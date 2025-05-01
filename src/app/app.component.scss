@@ -1,5 +1,29 @@
+$md: 577px;
+$lg: 1000px;
+
 .app{
     display: flex;
     flex-direction: column;
     height: 100vh;
+    text-align: center;
+    margin: 10px;
+    max-width: 1000px;
+}
+@media (max-width: $md) { // sm breakpoint
+    .app{
+        width: calc(100vw - 10%);
+    }
+    
+}
+
+@media (min-width: $md) and (max-width: $lg) { // md breakpoint
+    .app{
+        width: calc(100vw - 20%);
+    }
+}
+
+@media (min-width: $lg) { // lg breakpoint
+    .app{
+        width: 100vw;
+    }
 }
