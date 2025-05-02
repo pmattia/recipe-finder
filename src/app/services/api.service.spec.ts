@@ -1,13 +1,14 @@
 import { TestBed } from '@angular/core/testing';
-import { API_EMPTY_RESPONSE_MOCK, API_RECIPE_DETAILS_MOCK, API_RECIPES_MOCK, RECIPE_DETAILS_MOCK, RECIPES_PREVIEW_MOCK } from '../models/mock-data';
+import { RECIPE_DETAILS_MOCK, RECIPES_PREVIEW_MOCK } from '../../mocks/mock-data';
 import { RecipesService } from './api.service';
+import API_RECIPES_MOCK from '../../mocks/recipes.json'
+import API_EMPTY_RESPONSE_MOCK from '../../mocks/empy-response.json'
+import API_RECIPE_DETAILS_MOCK from '../../mocks/recipe-detail.json'
 
 describe('RecipeService', () => {
     let service: RecipesService;
     const mockApiRecipes = API_RECIPES_MOCK;
-    const mockRecipesPreview = RECIPES_PREVIEW_MOCK;
     const mockApiRecipeDetails = API_RECIPE_DETAILS_MOCK;
-    const mockRecipeDetails = RECIPE_DETAILS_MOCK;
     const mockEmptyApiResponse = API_EMPTY_RESPONSE_MOCK;
     
     beforeEach(() => {
@@ -21,6 +22,8 @@ describe('RecipeService', () => {
 
     it('should search recipes from API', async () => {
         const query = 'chicken';
+        const toBeRecipesPreview = RECIPES_PREVIEW_MOCK;
+
         spyOn(window, 'fetch').and.returnValue(Promise.resolve({
             ok: true,
             json: () => Promise.resolve(mockApiRecipes)
@@ -29,8 +32,8 @@ describe('RecipeService', () => {
         const recipes = await service.searchRecipe(query);
         expect(recipes).toBeDefined();
         expect(Array.isArray(recipes)).toBeTrue();
-        expect(recipes.length).toBe(mockRecipesPreview.length);
-        expect(recipes).toEqual(mockRecipesPreview);
+        expect(recipes.length).toBe(toBeRecipesPreview.length);
+        expect(recipes).toEqual(toBeRecipesPreview);
     });
 
     it('should throw an error if searchRecipe fails', async () => {
@@ -61,6 +64,7 @@ describe('RecipeService', () => {
 
     it('should fetch recipe details from API', async () => {
         const id = '52772';
+        const toBeRecipeDetails = RECIPE_DETAILS_MOCK;
 
         spyOn(window, 'fetch').and.returnValue(Promise.resolve({
             ok: true,
@@ -70,7 +74,7 @@ describe('RecipeService', () => {
         const recipe = await service.getRecipeDetails(id);
         expect(recipe).toBeDefined();
         expect(recipe.id).toBe(id);
-        expect(recipe).toEqual(mockRecipeDetails);
+        expect(recipe).toEqual(toBeRecipeDetails);
     });
 
     it('should throw an error if getRecipeDetails fails', async () => {

@@ -1,11 +1,3 @@
 <div class="app">
-  @if(!!store.error()) {
-    <strong>{{store.error()}}</strong>
-    <a (click)="onRestart()">Restart</a>
-  }
-  @else{
-    
-    
       <router-outlet />
-  }
 </div>

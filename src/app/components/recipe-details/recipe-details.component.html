@@ -1,7 +1,4 @@
 <app-header></app-header>
-@if(store.loading()) {
-    <mat-spinner matSuffix diameter="20"></mat-spinner>
-}
 
 @if(recipe$ | async; as recipe) {
     <div class="recipe-title">
@@ -55,7 +52,7 @@
     </ul>
 
     <h3>Intructions</h3>
-    <p>{{recipe.instructions}}</p>
+    <p [innerHTML]="recipe.instructions | recipeInstructions"></p>
 
     
 }

@@ -21,6 +21,10 @@ import { RecipeCardComponent } from '../recipe-card/recipe-card.component';
 })
 export class FavouritesComponent {
   store = inject(RecipeFinderStore);
+  
+  constructor() {
+    this.store.clearSearchQuery();
+  }
 
   onRemoveFavourite(recipe: RecipePreview) {
     this.store.removeFromFavourites(recipe.id);

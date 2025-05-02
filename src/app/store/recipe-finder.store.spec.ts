@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { RECIPE_DETAILS_MOCK, RECIPES_PREVIEW_MOCK } from '../models/mock-data';
+import { RECIPE_DETAILS_MOCK, RECIPES_PREVIEW_MOCK } from '../../mocks/mock-data';
 import { RecipePreview } from '../models/recipe-preview.model';
 import { RecipesService } from '../services/api.service';
 import { RecipeFinderStore } from './recipe-finder.store';

@@ -1,5 +1,6 @@
 import { inject } from "@angular/core";
-import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { patchState, signalStore, withMethods, withState, withProps } from '@ngrx/signals';
 import { RecipePreview } from "../models/recipe-preview.model";
 import { Recipe } from "../models/recipe.model";
 import { RecipesService } from "../services/api.service";
@@ -26,6 +27,9 @@ const storageKey = 'recipe-finder';
 export const RecipeFinderStore = signalStore(
     { providedIn: 'root' }, //this is a signleton service
     withState(initialState),
+    withProps(({ error }) => ({
+        hasError$: toObservable(error)
+      })),
     withMethods(
         (store, recipeService = inject(RecipesService)) => ({
             async searchRecipe(query: string) {
@@ -89,5 +93,5 @@ export const RecipeFinderStore = signalStore(
     withStorageSync(storageKey, SessionStorageService, (state: RecipeFinderState) => ({
         searchQuery: state.searchQuery,
         loading: state.loading,
-    }))
+    })),
 )

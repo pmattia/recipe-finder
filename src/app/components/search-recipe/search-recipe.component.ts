@@ -1,7 +1,7 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, SecurityContext, ViewChild } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatAutocompleteModule, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatFormFieldModule, MatSuffix } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -10,6 +10,8 @@ import { Router, RouterModule } from '@angular/router';
 import { Observable, debounceTime, switchMap, of } from 'rxjs';
 import { RecipePreview } from '../../models/recipe-preview.model';
 import { RecipeFinderStore } from '../../store/recipe-finder.store';
+import { DomSanitizer } from '@angular/platform-browser';
+import { HighlightKeywordPipe } from './highlight-keyword.pipe';
 
 @Component({
   selector: 'search-recipe',
@@ -23,17 +25,20 @@ import { RecipeFinderStore } from '../../store/recipe-finder.store';
     , MatSuffix
     , AsyncPipe
     , MatProgressSpinner
-  , RouterModule],
+  , RouterModule
+,HighlightKeywordPipe],
   templateUrl: './search-recipe.component.html',
   styleUrl: './search-recipe.component.scss'
 })
 export class SearchRecipeComponent {
   private router = inject(Router);
   store = inject(RecipeFinderStore);
+  sanitizer = inject(DomSanitizer);
 
   searchInput = new FormControl('');
   suggestedRecipes$: Observable<RecipePreview[]>;
-
+  @ViewChild(MatAutocompleteTrigger) autocomplete!: MatAutocompleteTrigger;
+  
   constructor() {
     this.suggestedRecipes$ = this.searchInput.valueChanges.pipe(
       debounceTime(500),
@@ -41,7 +46,8 @@ export class SearchRecipeComponent {
         if (!value || value.length < 3) {
           return of([]); 
         }
-        return this.store.searchRecipe(value).then(res => res);
+        const sanitizedValue = this.sanitizer.sanitize(SecurityContext.HTML, value) || '';
+        return this.store.searchRecipe(sanitizedValue).then(res => res);
       })
     );
   }
@@ -49,6 +55,7 @@ export class SearchRecipeComponent {
   onSearchRecipe(query: string) {
     if (query && query.length > 0) {
       this.router.navigate([`/recipes/${query}`]);
+      this.autocomplete.closePanel();
     }
   }
 

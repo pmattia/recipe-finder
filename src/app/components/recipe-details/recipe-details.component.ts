@@ -10,6 +10,7 @@ import { HeaderComponent } from '../header/header.component';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { RecipeThumbComponent } from '../recipe-thumb/recipe-thumb.component';
 import { MatCard } from '@angular/material/card';
+import { RecipeInstructionsPipe } from './recipe-instructions.pipe';
 
 @Component({
   selector: 'recipe-details',
@@ -21,7 +22,8 @@ import { MatCard } from '@angular/material/card';
     ,MatButton
     ,MatIconButton
     ,RecipeThumbComponent
-    ,MatCard
+    ,MatCard,
+    RecipeInstructionsPipe
   ],
   templateUrl: './recipe-details.component.html',
   styleUrls: ['./recipe-details.component.scss'],

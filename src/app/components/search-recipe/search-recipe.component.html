@@ -11,9 +11,9 @@
     @if(store.loading()) {
     <mat-spinner matSuffix diameter="20"></mat-spinner>
     }
-    @else {
+    
     <mat-icon matPrefix fontIcon="search"></mat-icon>
-    }
+    
 
     <mat-autocomplete 
         #auto="matAutocomplete">
@@ -21,7 +21,9 @@
         <mat-option [value]="suggestedRecipes.name" 
             (onSelectionChange)="onSelectSuggestion(suggestedRecipes)"
             (click)="onSelectSuggestion(suggestedRecipes)"
-            >{{suggestedRecipes.name}}</mat-option>
+            >
+            <span [innerHTML]="suggestedRecipes.name | highlightKeyword:input.value"></span>
+        </mat-option>
         }
     </mat-autocomplete>
 </mat-form-field>

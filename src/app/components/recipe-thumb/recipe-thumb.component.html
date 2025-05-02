@@ -2,6 +2,10 @@
     [style.height.px]="imageHeight()"
     matRipple 
     [routerLink]="['/recipe', recipe().id]">
+    @if(loading()){
+    <div class="spinner-tissue"></div>
+    <mat-spinner matSuffix diameter="20"></mat-spinner>
+    }
     <img [ngSrc]="recipe().thumb" 
     
     fill 

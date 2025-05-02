@@ -3,13 +3,15 @@ import { Component, input } from '@angular/core';
 import { RecipePreview } from '../../models/recipe-preview.model';
 import { RouterModule } from '@angular/router';
 import { MatRipple } from '@angular/material/core';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'recipe-thumb',
   imports: [
     NgOptimizedImage
-  ,RouterModule
-,MatRipple],
+    , RouterModule
+    , MatRipple
+  , MatProgressSpinner],
   providers: [
     {
       provide: IMAGE_CONFIG,
@@ -25,4 +27,5 @@ import { MatRipple } from '@angular/material/core';
 export class RecipeThumbComponent {
   imageHeight = input<number>(250);
   recipe = input.required<RecipePreview>()
+  loading = input<boolean>(false);
 }

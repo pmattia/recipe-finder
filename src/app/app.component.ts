@@ -1,9 +1,8 @@
-import { Component, inject } from '@angular/core';
-import { MatIcon } from '@angular/material/icon';
-import { MatBadge } from '@angular/material/badge';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { RecipeFinderStore } from './store/recipe-finder.store';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -13,13 +12,29 @@ import { RecipeFinderStore } from './store/recipe-finder.store';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
-  constructor(private router: Router) { }
-  
+export class AppComponent{
+  private snackBar = inject(MatSnackBar);
   store = inject(RecipeFinderStore);
+  errorSubscription: Subscription;
 
-  onRestart(){
-    this.store.restart();
-    this.router.navigate(['/']);
+  constructor(private router: Router) { 
+    this.errorSubscription = this.store.hasError$.subscribe((error) => {
+      if (error) {
+        this.openSnackBar(error, 'Restart');
+      }
+    });
+  }
+  
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action,{
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+    }).onAction().subscribe(() => {
+      this.store.restart();
+      this.router.navigate(['/']);
+    });
+  }
+  ngOnDestroy() {
+    this.errorSubscription.unsubscribe();
   }
 }

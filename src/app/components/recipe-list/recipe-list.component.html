@@ -6,9 +6,6 @@
             <p>No recipes found.</p>
         
     } @else {
-        @if(store.loading()) {
-            <mat-spinner matSuffix diameter="20"></mat-spinner>
-        }
         <search-recipe></search-recipe>
         <p class="text-left"><strong>{{recipes.length}}</strong> recipes found.</p>
         <div class="recipe-list">
