@@ -41,7 +41,7 @@ export const RecipeFinderStore = signalStore(
                 patchState(store, { loading: true });
                 try {
                     const recipes = await recipeService.searchRecipe(query);
-                    patchState(store, { loading: false, lastQuery: query });
+                    patchState(store, { loading: false, lastQuery: query, lastRecipes: recipes });
                     return recipes;
                 } catch (error) {
                     console.error('Error fetching recipes:', error);
