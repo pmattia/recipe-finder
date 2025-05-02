@@ -24,18 +24,18 @@
             Origin <strong>{{recipe.area}}</strong></p>
 
             @if(recipe.youtube){
-            <button mat-stroked-button color="info" (click)="onPlayTutorialClick(recipe)">
+            <button mat-stroked-button (click)="onPlayTutorialClick(recipe)">
                 <mat-icon>play_arrow</mat-icon>
                 Video tutorial
             </button>
             }   
             @if(!store.isRecipeFavourite(recipe.id)){
-                <button mat-flat-button color="info" (click)="onAddFavourite(recipe)">
+                <button id="add-to-favourites" mat-flat-button (click)="onAddFavourite(recipe)">
                     <mat-icon>favorite</mat-icon>
                     Add to favourites
                 </button>
             }@else {
-                <button mat-stroked-button color="info" (click)="onRemoveFavourite(recipe)">
+                <button id="remove-from-favorites" mat-stroked-button (click)="onRemoveFavourite(recipe)">
                     
                     <mat-icon>favorite_border</mat-icon>
                     Remove from favourites

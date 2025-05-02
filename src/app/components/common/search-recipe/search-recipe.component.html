@@ -1,6 +1,11 @@
 <mat-form-field>
-    <input #input matInput (keydown.enter)="onSearchRecipe(input.value)" [formControl]="searchInput"
-        [matAutocomplete]="auto" matAutocompleteOrigin [ngModel]="store.searchQuery()">
+    <input #input matInput 
+    (keydown.enter)="onSearchRecipe(input.value)" 
+    [formControl]="searchInput"
+    [matAutocomplete]="auto" 
+    matAutocompleteOrigin 
+    placeholder="Search recipes"
+    [ngModel]="store.searchQuery()">
 
     <div class="input-actions">
     @if(store.loading()) {
