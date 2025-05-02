@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
 import { RecipePreview } from '../../models/recipe-preview.model';
-import { RecipeFinderStore } from '../../store/recipe-finder.store';
-import { RecipeCardComponent } from '../common/recipe-card/recipe-card.component';
-import { MatButton } from '@angular/material/button';
 import { HeaderComponent } from '../common/header/header.component';
+import { RecipeCardComponent } from '../common/recipe-card/recipe-card.component';
+import { StatefulComponent } from '../common/stateful.component';
 
 @Component({
   selector: 'favourites',
@@ -21,11 +21,11 @@ import { HeaderComponent } from '../common/header/header.component';
   styleUrl: './favourites.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FavouritesComponent {
-  store = inject(RecipeFinderStore);
+export class FavouritesComponent extends StatefulComponent {
   router = inject(Router);
   
   constructor() {
+    super();
     this.store.clearSearchQuery();
   }
 

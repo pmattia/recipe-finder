@@ -1,14 +1,14 @@
 import { AsyncPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatCard } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { Recipe } from '../../models/recipe.model';
-import { RecipeFinderStore } from '../../store/recipe-finder.store';
 import { HeaderComponent } from '../common/header/header.component';
 import { RecipeThumbComponent } from '../common/recipe-thumb/recipe-thumb.component';
+import { StatefulComponent } from '../common/stateful.component';
 import { RecipeInstructionsPipe } from './recipe-instructions.pipe';
 
 @Component({
@@ -27,11 +27,11 @@ import { RecipeInstructionsPipe } from './recipe-instructions.pipe';
   styleUrls: ['./recipe-details.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RecipeDetailsComponent {
+export class RecipeDetailsComponent extends StatefulComponent implements OnInit {
   recipe$: Observable<Recipe>;
-  store = inject(RecipeFinderStore);
 
   constructor(private route: ActivatedRoute) {
+    super();
     this.recipe$ = this.route.data.pipe(
       map((data) => data['recipe'])
     );
@@ -46,5 +46,9 @@ export class RecipeDetailsComponent {
 
   onPlayTutorialClick(recipe: Recipe) {
     window.open(recipe.youtube, '_blank');
+  }
+
+  ngOnInit() {
+    window.scrollTo(0, 0);
   }
 }

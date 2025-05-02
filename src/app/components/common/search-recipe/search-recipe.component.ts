@@ -10,7 +10,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { Router, RouterModule } from '@angular/router';
 import { debounceTime, map, Observable, of, switchMap } from 'rxjs';
 import { RecipePreview } from '../../../models/recipe-preview.model';
-import { RecipeFinderStore } from '../../../store/recipe-finder.store';
+import { StatefulComponent } from '../stateful.component';
 import { HighlightKeywordPipe } from './highlight-keyword.pipe';
 
 @Component({
@@ -31,15 +31,15 @@ import { HighlightKeywordPipe } from './highlight-keyword.pipe';
   templateUrl: './search-recipe.component.html',
   styleUrl: './search-recipe.component.scss'
 })
-export class SearchRecipeComponent {
+export class SearchRecipeComponent extends StatefulComponent {
   private router = inject(Router);
-  store = inject(RecipeFinderStore);
 
   searchInput = new FormControl('');
   suggestedRecipes$: Observable<RecipePreview[]>;
   @ViewChild(MatAutocompleteTrigger) autocomplete!: MatAutocompleteTrigger;
 
   constructor() {
+    super();
     this.suggestedRecipes$ = this.searchInput.valueChanges
       .pipe(
         map(value => this.sanitizedInput(value)), //sanitize the input value

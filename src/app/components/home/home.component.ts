@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { SearchRecipeComponent } from '../common/search-recipe/search-recipe.component';
-import { RecipeFinderStore } from '../../store/recipe-finder.store';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatButton } from '@angular/material/button';
-import { RouterModule } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
+import { SearchRecipeComponent } from '../common/search-recipe/search-recipe.component';
+import { StatefulComponent } from '../common/stateful.component';
 
 @Component({
   selector: 'home',
@@ -16,6 +16,6 @@ import { MatIcon } from '@angular/material/icon';
   styleUrl: './home.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HomeComponent {
-  store = inject(RecipeFinderStore);
+export class HomeComponent  extends StatefulComponent {
+  
 }

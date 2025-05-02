@@ -84,6 +84,9 @@ export const RecipeFinderStore = signalStore(
             },
             restart(){
                 patchState(store, {error: undefined, loading: false, searchQuery: ''});
+            },
+            notifyError(message: string){
+                patchState(store, { loading: false, error: message });
             }
         })
     ),

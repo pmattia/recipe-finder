@@ -13,6 +13,7 @@ export class RecipeDetailsResolver implements Resolve<Recipe> {
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Recipe> | Promise<Recipe> | Recipe {
         const id = route.paramMap.get('id');
         if (!id) {
+            this.store.notifyError('OOOoopppss! An error occurred!');
             throw new Error('Recipe ID is required');
         }
         return this.store.getRecipeDetails(id);

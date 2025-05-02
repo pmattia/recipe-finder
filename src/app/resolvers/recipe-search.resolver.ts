@@ -11,7 +11,11 @@ export class RecipeSearchResolver implements Resolve<RecipePreview[]> {
     store = inject(RecipeFinderStore);
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<RecipePreview[]> | Promise<RecipePreview[]> | RecipePreview[] {
-        const query = route.paramMap.get('query') ?? '';
+        const query = route.paramMap.get('query');
+        if(!query){
+            this.store.notifyError('OOOoopppss! An error occurred!');
+            throw new Error('Recipe ID is required');
+        }
         return this.store.searchRecipe(query); // Call the searchRecipe method from the store
     }
 }

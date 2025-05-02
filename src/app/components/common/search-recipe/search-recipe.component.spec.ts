@@ -1,24 +1,19 @@
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { SearchRecipeComponent } from './search-recipe.component';
-import { RecipeFinderStore } from '../../../store/recipe-finder.store';
 
 describe('SearchRecipeComponent', () => {
   let component: SearchRecipeComponent;
   let mockRouter: jasmine.SpyObj<Router>;
-  let mockStore: jasmine.SpyObj<typeof RecipeFinderStore>; ;
 
   beforeEach(() => {
     mockRouter = jasmine.createSpyObj('Router', ['navigate']);
-    mockStore = jasmine.createSpyObj('RecipeFinderStore', ['searchRecipe', 'clearSearchQuery']);
-
+    
     TestBed.configureTestingModule({
       providers: [
-        { provide: Router, useValue: mockRouter },
-        { provide: RecipeFinderStore, useValue: mockStore },
+        { provide: Router, useValue: mockRouter }
       ],
     });
-
     component = TestBed.createComponent(SearchRecipeComponent).componentInstance;
   });
 
