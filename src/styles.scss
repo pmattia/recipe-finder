@@ -1,9 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
+$brand-green: #88BA35;
+$md: 577px;
+$lg: 1000px;
 
+@media (max-width: $md) { // sm breakpoint
+    .app{
+        width: calc(100vw - 10%);
+    }
+    
+}
+
+@media (min-width: $md) and (max-width: $lg) { // md breakpoint
+    .app{
+        width: calc(100vw - 20%);
+    }
+}
+
+@media (min-width: $lg) { // lg breakpoint
+    .app{
+        width: 100vw;
+    }
+}
 html, body { height: 100%; }
 body { 
     margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; 
-    font-size: 16px;
+    font-size: 18px;
     line-height: 2rem;
     > *{
         display: flex;
@@ -11,19 +32,86 @@ body {
         justify-content: center;
     }
 }
-h1 {
+h1, h2, h3, h4, h5, h6 {
     display: flex;
+}
+h1 {
     align-items: flex-start;
     gap: 1rem;
     * {
         display: flex;
     }
 }
+h3{
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--mat-sys-primary);
+    margin-bottom: 0;
+}
+.app{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    text-align: center;
+    margin: 1rem;
+    max-width: $lg;
+    .app-header{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background-color: var(--mat-sys-surface-container-lowest);
+        margin-bottom: 1.5rem;
+        margin-left: -1rem;
+        margin-right: -1rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    
+        h1 {
+    
+            > a {
+                display: flex;
+                gap: 1rem;
+                padding-top: .5rem;
+                border: 1px solid transparent;
+                &:hover{
+                    border:1px solid var(--mat-sys-primary);
+        
+                }
+                * {
+                    display: flex;
+                }
+            }
+        }
+    }
+}
+.tag{
+    padding: 0 .5rem;
+    text-transform: uppercase;
+    letter-spacing: .1rem;
+    font-size: .8rem;
+    font-weight: bold;
+    color: var(--mat-sys-surface-container-lowest);
+    background-color: $brand-green;
+}
 .hint{
     font-size: .8rem;
 }
+.text-left{
+    text-align: left;
+}
+
+
 
 /* MATERIAL OVERRIDES */
+
+.mat-icon.big-icon{
+    font-size: 3rem;
+    width: 3rem;
+    height: 3rem;
+}
 div.mat-mdc-autocomplete-panel{
     background-color: var(--mat-sys-surface-container-lowest) !important;
 }
@@ -38,4 +126,10 @@ div.mat-mdc-autocomplete-panel{
     .mdc-line-ripple::before{
         border: none;
     }
+}
+.mat-mdc-card{
+    overflow: hidden;
+    border:1px solid var(--mat-sys-outline-variant) !important;
+    background-color: var(--mat-sys-surface-container-lowest) !important;
+    box-shadow: 0px 0px 12px 5px rgba(186,0,92,0.13) !important;
 }

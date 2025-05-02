@@ -1,11 +1,17 @@
-<h2>Favourites</h2>
-@for(recipe of store.favouriteRecipes(); track recipe.id) {
-    <mat-card>
-        <strong>{{recipe.name}}</strong>
-        <p matLine>Category: {{recipe.category}}</p>
-        <recipe-thumb [recipe]="recipe"></recipe-thumb>
-        <button mat-button color="info" (click)="onRemoveFavourite(recipe)">Remove from favourites</button>
-        <button mat-button color="info" [routerLink]="['/recipe', recipe.id]">Details</button>
-    </mat-card>
-}   
+<app-header></app-header>
 
+@if(store.favouriteRecipes().length == 0) {
+<mat-icon class="big-icon">sentiment_very_dissatisfied</mat-icon>
+<p>No recipes found.</p>
+
+} @else {
+@if(store.loading()) {
+<mat-spinner matSuffix diameter="20"></mat-spinner>
+}
+<p class="text-left"><strong>{{store.favouriteRecipes().length}}</strong> favourite recipes.</p>
+<div class="favourites-list">
+    @for(recipe of store.favouriteRecipes(); track recipe.id) {
+    <recipe-card [recipe]="recipe"></recipe-card>
+    }
+</div>
+}

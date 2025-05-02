@@ -1,0 +1,12 @@
+<mat-card>
+    <div class="card-cover">
+        <recipe-thumb class="cover-image" [recipe]="recipe()"></recipe-thumb>
+        <div class="tag">{{recipe().category}}</div>
+    </div>
+    <div class="card-content">
+        <h2>{{recipe().name}}</h2>
+        <button mat-flat-button [routerLink]="['/recipe', recipe().id]">
+            Take a look
+        </button>
+    </div>
+</mat-card>

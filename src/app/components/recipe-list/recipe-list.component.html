@@ -1,39 +1,20 @@
-
-
-<div class="app-header">
-    <h1>
-        <a class="mat-mdc-button .mdc-button" matRipple  [routerLink]="['/']">
-            <img src="/assets/logo.svg" height="30" alt="Recipe finder">
-            <img height="36" alt="Recipe Finder" src="/assets/reciepe-finder.svg">    
-        </a>
-    </h1>
-    <button [routerLink]="['/favourites']" 
-        mat-button color="primary">
-        <mat-icon>favorite</mat-icon>favourites
-    </button>
-</div>
+<app-header></app-header>
 
 @if(recipes$ | async; as recipes) {
     @if(recipes.length == 0) {
-        <p>No recipes found</p>
+            <mat-icon class="big-icon">sentiment_very_dissatisfied</mat-icon>
+            <p>No recipes found.</p>
+        
     } @else {
         @if(store.loading()) {
             <mat-spinner matSuffix diameter="20"></mat-spinner>
+        }
+        <search-recipe></search-recipe>
+        <p class="text-left"><strong>{{recipes.length}}</strong> recipes found.</p>
+        <div class="recipe-list">
+            @for (recipe of (recipes$ | async); track recipe.id) {
+                <recipe-card class="recipe-card" [recipe]="recipe"></recipe-card>
             }
-        <p>{{recipes.length}} recipes found</p>
-        @for (recipe of (recipes$ | async); track recipe.id) {
-            <mat-card>
-                <strong>{{recipe.name}}</strong>
-                <p matLine>Category: {{recipe.category}}</p>
-                <recipe-thumb [recipe]="recipe"></recipe-thumb>
-                <button mat-button color="info" [routerLink]="['/recipe', recipe.id]">
-                    Details
-                    
-                </button>
-            </mat-card>
-            }
+        </div>       
     }
-    
 }
-
-

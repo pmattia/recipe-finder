@@ -1,3 +1,4 @@
+
 <mat-form-field>
     <input #input 
         matInput 
@@ -5,6 +6,7 @@
         [formControl]="searchInput" 
         [matAutocomplete]="auto"
         matAutocompleteOrigin 
+        [ngModel]="store.searchQuery()"
         >
     @if(store.loading()) {
     <mat-spinner matSuffix diameter="20"></mat-spinner>

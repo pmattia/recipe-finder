@@ -1,28 +1,26 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { MatButton } from '@angular/material/button';
-import { MatCard } from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { RecipePreview } from '../../models/recipe-preview.model';
-import { RecipeThumbComponent } from '../recipe-thumb/recipe-thumb.component';
 import { RecipeFinderStore } from '../../store/recipe-finder.store';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { MatIcon } from '@angular/material/icon';
-import { MatRipple } from '@angular/material/core';
+import { HeaderComponent } from '../header/header.component';
+import { RecipeCardComponent } from "../recipe-card/recipe-card.component";
+import { SearchRecipeComponent } from '../search-recipe/search-recipe.component';
 
 @Component({
   selector: 'recipe-list',
   imports: [
-    MatCard
-    , MatButton
-    , RouterModule
-    , AsyncPipe
-    , RecipeThumbComponent
-    , MatProgressSpinner
-    , MatIcon
-    , MatRipple
-  ],
+    RouterModule,
+    AsyncPipe,
+    MatProgressSpinner,
+    MatIcon,
+    RecipeCardComponent,
+    SearchRecipeComponent,
+    HeaderComponent
+],
   templateUrl: './recipe-list.component.html',
   styleUrl: './recipe-list.component.scss'
 })

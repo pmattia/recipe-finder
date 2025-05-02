@@ -6,14 +6,22 @@ import { Recipe } from '../../models/recipe.model';
 import { RecipeFinderStore } from '../../store/recipe-finder.store';
 import { MatIcon } from '@angular/material/icon';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { HeaderComponent } from '../header/header.component';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { RecipeThumbComponent } from '../recipe-thumb/recipe-thumb.component';
+import { MatCard } from '@angular/material/card';
 
 @Component({
   selector: 'recipe-details',
   imports: [AsyncPipe
     , MatIcon
     , RouterModule
-    ,NgOptimizedImage
     , MatProgressSpinner
+    ,HeaderComponent
+    ,MatButton
+    ,MatIconButton
+    ,RecipeThumbComponent
+    ,MatCard
   ],
   templateUrl: './recipe-details.component.html',
   styleUrls: ['./recipe-details.component.scss'],
@@ -33,5 +41,9 @@ export class RecipeDetailsComponent {
 
   onRemoveFavourite(recipe: Recipe) {
     this.store.removeFromFavourites(recipe.id);
+  }
+
+  onPlayTutorialClick(recipe: Recipe) {
+    window.open(recipe.youtube, '_blank');
   }
 }

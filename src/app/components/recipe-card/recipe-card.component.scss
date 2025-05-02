@@ -1,0 +1,14 @@
+.card-cover{
+    width: 100%;
+    position: relative;
+
+    .tag{
+        position:absolute;
+        bottom: 0;
+        left: 0;
+    }
+}
+.card-content{
+    padding: 0 1rem 1rem 1rem;
+    text-align: left;
+}

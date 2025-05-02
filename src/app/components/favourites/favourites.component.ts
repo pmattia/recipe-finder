@@ -1,18 +1,20 @@
 import { Component, inject } from '@angular/core';
-import { MatButton } from '@angular/material/button';
-import { MatCard } from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { RouterModule } from '@angular/router';
 import { RecipePreview } from '../../models/recipe-preview.model';
 import { RecipeFinderStore } from '../../store/recipe-finder.store';
-import { RecipeThumbComponent } from '../recipe-thumb/recipe-thumb.component';
+import { HeaderComponent } from '../header/header.component';
+import { RecipeCardComponent } from '../recipe-card/recipe-card.component';
 
 @Component({
   selector: 'favourites',
   imports: [
-    MatCard
-    , MatButton
-    , RouterModule
-   , RecipeThumbComponent
+     RouterModule
+   ,MatIcon
+   ,RecipeCardComponent
+   ,MatProgressSpinner
+   ,HeaderComponent
   ],
   templateUrl: './favourites.component.html',
   styleUrl: './favourites.component.scss'

@@ -1,8 +1,11 @@
-<div [routerLink]="['/recipe', recipe().id]" style="position: relative; width: 100%; height: 250px;">
+<div class="thumb-container" 
+    [style.height.px]="imageHeight()"
+    matRipple 
+    [routerLink]="['/recipe', recipe().id]">
     <img [ngSrc]="recipe().thumb" 
+    
     fill 
     alt="{{recipe().name}} image" 
-    style="object-fit: cover;" 
     placeholder="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mO8Ww8AAj8BXkQ+xPEAAAAASUVORK5CYII="
     loading="lazy">
 </div>
