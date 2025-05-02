@@ -1,21 +1,5 @@
 describe('Main tasks', () => {
   const apiurl = 'https://www.themealdb.com/api/json/v1/1/';
-  beforeEach(() => {
-    // Mock the API response for searching recipes
-    cy.fixture('recipes.json').then((recipes) => {
-      cy.intercept('GET', `${apiurl}search.php?s=pasta`, {
-        statusCode: 200,
-        body: recipes,
-      }).as('searchRecipes');
-    });
-    cy.fixture('recipe-detail.json').then((recipe) => {
-      cy.intercept('GET', `${apiurl}lookup.php?i=52772`, {
-        statusCode: 200,
-        body: recipe,
-      }).as('getRecipeDetails');
-    });
-  });
-
 
   it('should display an homepage', () => {
     cy.visit('/'); // Navigate to the home page
@@ -27,8 +11,15 @@ describe('Main tasks', () => {
   });
 
   it('should display suggestion when searching', () => {
-    cy.visit('/'); // Navigate to the home page
 
+    cy.fixture('recipes.json').then((recipes) => {
+      cy.intercept('GET', `${apiurl}search.php?s=pasta`, {
+        statusCode: 200,
+        body: recipes,
+      }).as('searchRecipes');
+    });
+
+    cy.visit('/'); // Navigate to the home page
 
     // Type a query and submit
     cy.get('input[placeholder="Search recipes"]').type('pasta');
@@ -39,6 +30,12 @@ describe('Main tasks', () => {
   });
 
   it('should display a result list', () => {
+    cy.fixture('recipes.json').then((recipes) => {
+      cy.intercept('GET', `${apiurl}search.php?s=pasta`, {
+        statusCode: 200,
+        body: recipes,
+      }).as('searchRecipes');
+    });
 
     cy.visit('/recipes/pasta'); // Navigate to result page
 
@@ -51,8 +48,14 @@ describe('Main tasks', () => {
       cy.get('.tag').contains('Beef');
     });
   });
-  
+
   it('should display a detail page', () => {
+    cy.fixture('recipe-detail.json').then((recipe) => {
+      cy.intercept('GET', `${apiurl}lookup.php?i=52772`, {
+        statusCode: 200,
+        body: recipe,
+      }).as('getRecipeDetails');
+    });
 
     cy.visit('/recipe/52772'); // Navigate to detail page
 
@@ -66,8 +69,8 @@ describe('Main tasks', () => {
     cy.get('#add-to-favourites').should('be.visible');
   });
 
-  
-  it('should add to favourites a recipe', () => {
+
+  it('should add a recipe to favourites', () => {
 
     cy.visit('/recipe/52772'); // Navigate to detail page
 
@@ -77,5 +80,22 @@ describe('Main tasks', () => {
     cy.get('#add-to-favourites').should('not.exist');
     cy.get('#remove-from-favorites').should('be.visible');
     cy.get('#goto-favourites').should('be.visible');
+  });
+
+  it('should show a feedback when an error occurs', () => {
+    cy.fixture('empty-response.json').then((empty) => {
+      cy.intercept('GET', `${apiurl}search.php?s=pasta`, {
+        statusCode: 500,
+        body: empty,
+      }).as('searchRecipesError');
+    });
+
+    cy.visit('/'); // Navigate to the home page
+
+    // Type a query and submit
+    cy.get('input[placeholder="Search recipes"]').type('pasta');
+
+    // Check if the results are displayed
+    cy.get('simple-snack-bar').should('be.visible');
   });
 });

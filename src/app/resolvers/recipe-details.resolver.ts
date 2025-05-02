@@ -16,6 +16,6 @@ export class RecipeDetailsResolver implements Resolve<Recipe> {
             this.store.notifyError('OOOoopppss! An error occurred!');
             throw new Error('Recipe ID is required');
         }
-        return this.store.getRecipeDetails(id);
+        return this.store.getRecipeDetailsAsync(id);
     }
 }

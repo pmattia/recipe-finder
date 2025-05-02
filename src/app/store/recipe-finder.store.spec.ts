@@ -31,7 +31,7 @@ describe('RecipeFinderStore', () => {
 
     it('should initialize with default state', () => {
         const store = TestBed.inject(RecipeFinderStore);
-        expect(store.searchQuery()).toBeUndefined();
+        expect(store.lastQuery()).toBeUndefined();
         expect(store.loading()).toBeFalse();
         expect(store.favouriteRecipes()).toEqual([]);
     });
@@ -43,7 +43,7 @@ describe('RecipeFinderStore', () => {
 
         it('should search recipes', async () => {
             const store = TestBed.inject(RecipeFinderStore);
-            const recipes = await store.searchRecipe('chicken');
+            const recipes = await store.searchRecipeAsync('chicken');
 
             expect(recipeService.searchRecipe).toHaveBeenCalledWith('chicken');
             expect(recipes).toEqual(mockRecipesPreview);
@@ -52,7 +52,7 @@ describe('RecipeFinderStore', () => {
 
         it('should set loading state while fetching data', async () => {
             const store = TestBed.inject(RecipeFinderStore);
-            const loadPromise = store.searchRecipe('chicken');
+            const loadPromise = store.searchRecipeAsync('chicken');
             expect(store.loading()).toBeTrue();
             await loadPromise;
             expect(store.loading()).toBeFalse();
@@ -60,9 +60,9 @@ describe('RecipeFinderStore', () => {
         
         it('should set search query state', async () => {
             const store = TestBed.inject(RecipeFinderStore);
-            const loadPromise = store.searchRecipe('chicken');
+            const loadPromise = store.searchRecipeAsync('chicken');
             await loadPromise;
-            expect(store.searchQuery()).toEqual('chicken');
+            expect(store.lastQuery()).toEqual('chicken');
         });
     });
     describe('getRecipeDetails', () => {
@@ -72,7 +72,7 @@ describe('RecipeFinderStore', () => {
 
         it('should get recipe details', async () => {
             const store = TestBed.inject(RecipeFinderStore);
-            const recipe = await store.getRecipeDetails('123');
+            const recipe = await store.getRecipeDetailsAsync('123');
 
             expect(recipeService.getRecipeDetails).toHaveBeenCalledWith('123');
             expect(recipe).toEqual(mockRecipeDetails);
@@ -81,7 +81,7 @@ describe('RecipeFinderStore', () => {
 
         it('should set loading state while fetching data', async () => {
             const store = TestBed.inject(RecipeFinderStore);
-            const loadPromise = store.getRecipeDetails('123');
+            const loadPromise = store.getRecipeDetailsAsync('123');
             expect(store.loading()).toBeTrue();
             await loadPromise;
             expect(store.loading()).toBeFalse();

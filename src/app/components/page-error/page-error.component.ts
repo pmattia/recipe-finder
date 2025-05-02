@@ -8,7 +8,6 @@ import { MatButton } from '@angular/material/button';
   selector: 'page-error',
   imports: [HeaderComponent, MatIcon, RouterModule, MatButton],
   templateUrl: './page-error.component.html',
-  styleUrl: './page-error.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PageErrorComponent {

@@ -64,17 +64,6 @@ describe('SearchRecipeComponent', () => {
       const sanitized = component['sanitizedInput'](input);
       expect(sanitized).toBe('divdiv');
     });
-
-    it('should sanitize the query before navigating', () => {
-        const query = `<script>alert('XSS')</script>`;
-        component.onSearchRecipe(query);
-        expect(mockRouter.navigate).toHaveBeenCalledWith(['/recipes/scriptalertXSSscript']);
-    });
-
-    it('should not navigate if the sanitized query is empty', () => {
-        component.onSearchRecipe('<>');
-        expect(mockRouter.navigate).not.toHaveBeenCalled();
-    });
   });
 
     

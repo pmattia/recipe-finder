@@ -10,7 +10,6 @@ import { RecipeFinderStore } from './store/recipe-finder.store';
     RouterOutlet
     , RouterModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent{

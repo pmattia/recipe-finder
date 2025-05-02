@@ -1,5 +1,4 @@
-import { AsyncPipe } from '@angular/common';
-import { Component, inject, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output, ViewChild } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatIconButton } from '@angular/material/button';
@@ -7,10 +6,9 @@ import { MatFormFieldModule, MatSuffix } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { Router, RouterModule } from '@angular/router';
-import { debounceTime, map, Observable, of, switchMap } from 'rxjs';
+import { RouterModule } from '@angular/router';
+import { debounceTime, map, of, tap } from 'rxjs';
 import { RecipePreview } from '../../../models/recipe-preview.model';
-import { StatefulComponent } from '../stateful.component';
 import { HighlightKeywordPipe } from './highlight-keyword.pipe';
 
 @Component({
@@ -23,51 +21,56 @@ import { HighlightKeywordPipe } from './highlight-keyword.pipe';
     , MatAutocompleteModule
     , MatIcon
     , MatSuffix
-    , AsyncPipe
     , MatProgressSpinner
     , RouterModule
     , HighlightKeywordPipe
   , MatIconButton],
   templateUrl: './search-recipe.component.html',
-  styleUrl: './search-recipe.component.scss'
+  styleUrl: './search-recipe.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SearchRecipeComponent extends StatefulComponent {
-  private router = inject(Router);
-
+export class SearchRecipeComponent {
   searchInput = new FormControl('');
-  suggestedRecipes$: Observable<RecipePreview[]>;
+
   @ViewChild(MatAutocompleteTrigger) autocomplete!: MatAutocompleteTrigger;
 
+  suggestedRecipes = input<RecipePreview[] | null>([]);
+  searchQuery = input<string | undefined>('');
+  isLoading = input<boolean>(false);
+
+  searchQueryChanges = output<string>();
+  onSubmit = output<string>();
+  onSuggestionSelected = output<RecipePreview>();
+  onClear = output();
+
   constructor() {
-    super();
-    this.suggestedRecipes$ = this.searchInput.valueChanges
+    this.searchInput.valueChanges
       .pipe(
         map(value => this.sanitizedInput(value)), //sanitize the input value
-        debounceTime(500),
-        switchMap(value => {
-          if (!value || value.length < 3) {
-            return of([]);
-          }
-          return this.store.searchRecipe(value).then(res => res);
-        })
-      )
+        debounceTime(500)
+      ).subscribe(value => {
+        if (!value || value.length < 3) {
+          return of([]);
+        }
+        return this.searchQueryChanges.emit(value);
+      })
   }
 
   onSearchRecipe(query: string) {
     const sanitizedQuery = this.sanitizedInput(query);
     if (sanitizedQuery && sanitizedQuery.length > 0) {
-      this.router.navigate([`/recipes/${sanitizedQuery}`]);
       if(this.autocomplete) this.autocomplete.closePanel();
+      this.onSubmit.emit(sanitizedQuery);
     }
   }
 
   onSelectSuggestion(recipe: RecipePreview) {
-    this.router.navigate([`/recipe/${recipe.id}`]);
+    this.onSuggestionSelected.emit(recipe);
   }
 
   onClearQuery(){
     this.searchInput.setValue('');
-    this.store.clearSearchQuery();
+    this.onClear.emit();
   }
 
   private sanitizedInput(value: string | null): string {

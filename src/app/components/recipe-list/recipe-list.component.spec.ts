@@ -39,7 +39,6 @@ describe('RecipeListComponent', () => {
 
     fixture = TestBed.createComponent(RecipeListComponent);
     component = fixture.componentInstance;
-    console.log(component);
   });
 
   it('should display "No recipes found" when recipes$ is empty', () => {

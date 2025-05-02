@@ -26,7 +26,7 @@ export class FavouritesComponent extends StatefulComponent {
   
   constructor() {
     super();
-    this.store.clearSearchQuery();
+    this.store.clearLastQuery();
   }
 
   onRemoveFavourite(recipe: RecipePreview) {

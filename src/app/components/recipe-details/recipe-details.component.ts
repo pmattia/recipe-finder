@@ -4,7 +4,7 @@ import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatCard } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { map, Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { Recipe } from '../../models/recipe.model';
 import { HeaderComponent } from '../common/header/header.component';
 import { RecipeThumbComponent } from '../common/recipe-thumb/recipe-thumb.component';

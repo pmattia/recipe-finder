@@ -55,7 +55,7 @@ describe('RecipeDetailsResolver', () => {
     
         const result = resolver.resolve(route, state);
     
-        expect(mockStore.getRecipeDetails).toHaveBeenCalledWith('123');
+        expect(mockStore.getRecipeDetailsAsync).toHaveBeenCalledWith('123');
         expect(result).toBeTruthy();
     });
 });

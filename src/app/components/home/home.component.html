@@ -6,7 +6,16 @@
     Got some ingredients in the fridge or a dish in mind?<br>
     <strong>Type it here and discover what you can cook!</strong>
 </p>
-<search-recipe></search-recipe>
+<search-recipe
+    [searchQuery]="store.lastQuery()"
+    [isLoading]="store.loading()"
+    [suggestedRecipes]="suggestedRecipes$ | async"
+    (searchQueryChanges)="searchQueryChanges($event)"
+    (onSubmit)="onSubmit($event)"
+    (onSuggestionSelected)="onSuggestionSelected($event)"
+    (onClear)="onSearchClear()"
+>
+</search-recipe>
 @if(store.favouriteRecipes().length > 0) {
     <div class="favourite-recipes">
         <p>Or you can check your </p>

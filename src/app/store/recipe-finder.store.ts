@@ -11,14 +11,16 @@ import { withStorageSync } from "./features/with-storage-sync";
 type RecipeFinderState = {
     loading: boolean;
     favouriteRecipes: RecipePreview[];
-    searchQuery: string | undefined;
+    lastQuery: string | undefined;
+    lastRecipes: RecipePreview[];
     error: string | undefined;
 };
 
 const initialState: RecipeFinderState = {
     loading: false,
     favouriteRecipes: [],
-    searchQuery: undefined,
+    lastQuery: undefined,
+    lastRecipes: [],
     error: undefined,
 };
 
@@ -30,13 +32,16 @@ export const RecipeFinderStore = signalStore(
     withProps(({ error }) => ({
         hasError$: toObservable(error)
       })),
+      withProps(({ lastRecipes }) => ({
+          lastRecipes$: toObservable(lastRecipes)
+        })),
     withMethods(
         (store, recipeService = inject(RecipesService)) => ({
-            async searchRecipe(query: string) {
+            async searchRecipeAsync(query: string): Promise<RecipePreview[]> {
                 patchState(store, { loading: true });
                 try {
                     const recipes = await recipeService.searchRecipe(query);
-                    patchState(store, { loading: false, searchQuery: query });
+                    patchState(store, { loading: false, lastQuery: query });
                     return recipes;
                 } catch (error) {
                     console.error('Error fetching recipes:', error);
@@ -44,7 +49,26 @@ export const RecipeFinderStore = signalStore(
                     return [];
                 }
             },
-            async getRecipeDetails(id: string): Promise<Recipe> {
+            searchRecipe(query: string) {
+                patchState(store, { loading: true });
+                try {
+                    recipeService.searchRecipe(query).then(recipes => {
+                        patchState(store, { lastQuery: query, lastRecipes: recipes });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching recipes:', error);
+                        patchState(store, { error: 'Failed to fetch recipes' });
+                    })
+                    .finally(() => {
+                        patchState(store, { loading: false});
+                    })
+                    ;
+                } catch (error) {
+                    console.error('Error fetching recipes:', error);
+                    patchState(store, { loading: false, error: 'Failed to fetch recipes' });
+                }
+            },
+            async getRecipeDetailsAsync(id: string): Promise<Recipe> {
                 patchState(store, { loading: true });
                 try {
                     const recipe = await recipeService.getRecipeDetails(id);
@@ -79,11 +103,11 @@ export const RecipeFinderStore = signalStore(
                 const currentFavourites = store.favouriteRecipes();
                 return currentFavourites.some((r) => r.id === id);
             },
-            clearSearchQuery() {
-                patchState(store, { searchQuery: undefined });
+            clearLastQuery() {
+                patchState(store, { lastQuery: undefined, lastRecipes: [] });
             },
             restart(){
-                patchState(store, {error: undefined, loading: false, searchQuery: ''});
+                patchState(store, {error: undefined, loading: false, lastQuery: ''});
             },
             notifyError(message: string){
                 patchState(store, { loading: false, error: message });
@@ -94,6 +118,7 @@ export const RecipeFinderStore = signalStore(
         favouriteRecipes: state.favouriteRecipes,
     })),
     withStorageSync(storageKey, SessionStorageService, (state: RecipeFinderState) => ({
-        searchQuery: state.searchQuery,
+        lastQuery: state.lastQuery,
+        lastRecipes: state.lastRecipes
     })),
 )

@@ -2,8 +2,8 @@
 
 @if(recipe$ | async; as recipe) {
     <div class="recipe-title">
-        @if(store.searchQuery()){
-        <button mat-icon-button [routerLink]="['/recipes', store.searchQuery()]">
+        @if(store.lastQuery()){
+        <button mat-icon-button [routerLink]="['/recipes', store.lastQuery()]">
             <mat-icon>arrow_back</mat-icon>
         </button>
         }

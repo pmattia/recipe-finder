@@ -16,6 +16,9 @@ export class RecipeSearchResolver implements Resolve<RecipePreview[]> {
             this.store.notifyError('OOOoopppss! An error occurred!');
             throw new Error('Recipe ID is required');
         }
-        return this.store.searchRecipe(query); // Call the searchRecipe method from the store
+        if(this.store.lastRecipes().length > 0)
+            return this.store.lastRecipes()
+        else
+            return this.store.searchRecipeAsync(query); // Call the searchRecipe method from the store
     }
 }

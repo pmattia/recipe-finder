@@ -5,10 +5,10 @@
     [matAutocomplete]="auto" 
     matAutocompleteOrigin 
     placeholder="Search recipes"
-    [ngModel]="store.searchQuery()">
+    [ngModel]="searchQuery()">
 
     <div class="input-actions">
-    @if(store.loading()) {
+    @if(isLoading()) {
     <mat-spinner matSuffix diameter="20"></mat-spinner>
     }
     @if (input.value) {
@@ -22,7 +22,7 @@
 
 
     <mat-autocomplete #auto="matAutocomplete">
-        @for (suggestedRecipes of suggestedRecipes$ | async; track suggestedRecipes.id) {
+        @for (suggestedRecipes of suggestedRecipes(); track suggestedRecipes.id) {
         <mat-option [value]="suggestedRecipes.name" (onSelectionChange)="onSelectSuggestion(suggestedRecipes)"
             (click)="onSelectSuggestion(suggestedRecipes)">
             <span [innerHTML]="suggestedRecipes.name | highlightKeyword:input.value"></span>

@@ -21,13 +21,14 @@ import { StatefulComponent } from '../common/stateful.component';
     HeaderComponent,
     MatIcon,
     MatButton
-],
+  ],
   templateUrl: './recipe-list.component.html',
   styleUrl: './recipe-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RecipeListComponent  extends StatefulComponent{
+export class RecipeListComponent extends StatefulComponent {
   recipes$: Observable<RecipePreview[]>;
+  suggestedRecipes$: Observable<RecipePreview[]>;
   router = inject(Router);
 
   constructor(private route: ActivatedRoute) {
@@ -35,10 +36,30 @@ export class RecipeListComponent  extends StatefulComponent{
     this.recipes$ = this.route.data.pipe(
       map(data => data['results'])
     );
+    
+    this.suggestedRecipes$ = this.store.lastRecipes$;
   }
-  
+
   goToDetails(id: string) {
     this.router.navigate(['recipe', id]);
+  }
+
+  searchQueryChanges(query: string) {
+    if (query !== this.store.lastQuery()) {
+      this.store.searchRecipe(query);
+    }
+  }
+
+  onSubmit(query: string) {
+    this.router.navigate([`/recipes/${query}`]);
+  }
+
+  onSuggestionSelected(recipe: RecipePreview) {
+    this.router.navigate([`/recipe/${recipe.id}`]);
+  }
+
+  onSearchClear() {
+    this.store.clearLastQuery();
   }
 }
 
