@@ -1,8 +1,7 @@
-import { Component, inject } from '@angular/core';
-import { RecipeFinderStore } from '../../store/recipe-finder.store';
-import { RouterModule } from '@angular/router';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -11,9 +10,9 @@ import { MatIcon } from '@angular/material/icon';
     ,MatIcon
   ],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent {
-
-  store = inject(RecipeFinderStore);
+  favouritesCount = input<number>(0);
 }

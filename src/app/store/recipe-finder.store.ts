@@ -83,7 +83,7 @@ export const RecipeFinderStore = signalStore(
                 patchState(store, { searchQuery: undefined });
             },
             restart(){
-                patchState(store, {error: undefined, loading: false, searchQuery: undefined});
+                patchState(store, {error: undefined, loading: false, searchQuery: ''});
             }
         })
     ),
@@ -92,6 +92,5 @@ export const RecipeFinderStore = signalStore(
     })),
     withStorageSync(storageKey, SessionStorageService, (state: RecipeFinderState) => ({
         searchQuery: state.searchQuery,
-        loading: state.loading,
     })),
 )

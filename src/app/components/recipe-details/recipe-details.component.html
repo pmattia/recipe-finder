@@ -1,4 +1,4 @@
-<app-header></app-header>
+<app-header [favouritesCount]="store.favouriteRecipes().length"></app-header>
 
 @if(recipe$ | async; as recipe) {
     <div class="recipe-title">
@@ -14,7 +14,9 @@
 <mat-card>
     <div class="recipe-cover">
         <recipe-thumb class="cover-image" 
-            [recipe]="recipe"
+            [imgSrc]="recipe.thumb"
+            [imgAlt]="recipe.name"
+            [hasPriority]="true"
             [imageHeight]="350">
         </recipe-thumb>
         <div class="cover-info">
@@ -46,7 +48,7 @@
     
     <h3>Ingredients</h3>
     <ul>
-        @for(ingredient of recipe.ingredients; track ingredient.name) {
+        @for(ingredient of recipe.ingredients; track ingredient) {
             <li><strong>{{ingredient.name}}</strong> {{ingredient.measure}}</li>
         }
     </ul>

@@ -1,0 +1,20 @@
+::ng-deep{
+    .mat-mdc-form-field-icon-suffix{
+        margin-right: 1rem;
+    }
+    .mat-mdc-form-field-infix{
+        display: flex;
+        position: relative;
+        input{
+            height: 2.5rem !important;
+        }
+        .input-actions{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            
+        }
+    }
+    
+}

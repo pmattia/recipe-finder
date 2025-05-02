@@ -1,0 +1,17 @@
+<div class="thumb-container" [style.height.px]="imageHeight()" matRipple (click)="onImageClick()">
+    @if(loading()){
+    <div class="spinner-tissue"></div>
+    <mat-spinner matSuffix diameter="20"></mat-spinner>
+    }
+
+    @if(hasPriority()){
+    <img [ngSrc]="imgSrc()" fill alt="{{imgAlt()}}" priority
+        placeholder="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mO8Ww8AAj8BXkQ+xPEAAAAASUVORK5CYII="
+        >
+    }@else {
+    <img [ngSrc]="imgSrc()" fill alt="{{imgAlt()}}"
+        placeholder="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mO8Ww8AAj8BXkQ+xPEAAAAASUVORK5CYII="
+        loading="lazy">
+    }
+
+</div>

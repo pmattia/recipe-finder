@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { AfterContentInit, ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { RecipeFinderStore } from './store/recipe-finder.store';
 import {MatSnackBar} from '@angular/material/snack-bar';
@@ -10,9 +10,10 @@ import { Subscription } from 'rxjs';
     RouterOutlet
     , RouterModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent{
+export class AppComponent implements OnInit, AfterContentInit {
   private snackBar = inject(MatSnackBar);
   store = inject(RecipeFinderStore);
   errorSubscription: Subscription;
@@ -23,6 +24,15 @@ export class AppComponent{
         this.openSnackBar(error, 'Restart');
       }
     });
+  }
+  ngAfterContentInit(): void {
+    console.log('AppComponent content initialized');
+    this.store.restart();
+  }
+
+  ngOnInit(): void {
+    // console.log('AppComponent initialized');
+    // this.store.restart();
   }
   
   openSnackBar(message: string, action: string) {

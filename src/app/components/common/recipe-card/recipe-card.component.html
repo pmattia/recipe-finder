@@ -1,0 +1,18 @@
+<mat-card>
+    <div class="card-cover">
+        <recipe-thumb class="cover-image" 
+            [imgSrc]="thumb()" 
+            [imgAlt]="name()"
+            [loading]="isLoading"
+            [hasPriority]="imageHasPriority()"
+            (onClick)="onDetailClicked(id())"
+            ></recipe-thumb>
+        <div class="tag">{{category()}}</div>
+    </div>
+    <div class="card-content">
+        <h2>{{name()}}</h2>
+        <button mat-flat-button (click)="onDetailClicked(id())">
+            Take a look
+        </button>
+    </div>
+</mat-card>

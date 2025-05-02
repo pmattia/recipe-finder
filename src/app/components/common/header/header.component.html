@@ -5,8 +5,8 @@
             <img height="36" alt="Recipe Finder" src="/assets/reciepe-finder.svg">
         </a>
     </h1>
-    @if(store.favouriteRecipes().length > 0) {
-        <button [routerLink]="['/favourites']" mat-button color="primary">
+    @if(favouritesCount() > 0) {
+        <button mat-stroked-button [routerLink]="['/favourites']" color="primary">
             <mat-icon>favorite</mat-icon>favourites
         </button>
     }

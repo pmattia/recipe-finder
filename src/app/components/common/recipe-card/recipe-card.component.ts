@@ -1,9 +1,7 @@
 
-import { Component, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MatCard } from '@angular/material/card';
-import { Router } from '@angular/router';
-import { RecipePreview } from '../../models/recipe-preview.model';
 import { RecipeThumbComponent } from '../recipe-thumb/recipe-thumb.component';
 
 @Component({
@@ -13,15 +11,21 @@ import { RecipeThumbComponent } from '../recipe-thumb/recipe-thumb.component';
     , MatButton
     , RecipeThumbComponent],
   templateUrl: './recipe-card.component.html',
-  styleUrl: './recipe-card.component.scss'
+  styleUrl: './recipe-card.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecipeCardComponent {
-  router = inject(Router);
-  recipe = input.required<RecipePreview>();
+  
+  id = input.required<string>();
+  thumb = input.required<string>();
+  name = input.required<string>();
+  category = input.required<string>();
+  imageHasPriority = input<boolean>(false);
   isLoading = false;
+  onDetailClick = output<string>();
 
   onDetailClicked(id: string) {
-    this.router.navigate(['recipe', id]);
     this.isLoading = true;
+    this.onDetailClick.emit(id);
   }
 }

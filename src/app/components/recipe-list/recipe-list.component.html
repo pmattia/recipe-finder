@@ -1,16 +1,25 @@
-<app-header></app-header>
+<app-header [favouritesCount]="store.favouriteRecipes().length"></app-header>
 
 @if(recipes$ | async; as recipes) {
     @if(recipes.length == 0) {
             <mat-icon class="big-icon">sentiment_very_dissatisfied</mat-icon>
-            <p>No recipes found.</p>
-        
+            <p>No recipes found for <strong>"{{store.searchQuery()}}"</strong>.</p>
+            <button mat-button color="primary" [routerLink]="['/']">
+                <mat-icon>arrow_back</mat-icon>Try again
+            </button>
     } @else {
         <search-recipe></search-recipe>
-        <p class="text-left"><strong>{{recipes.length}}</strong> recipes found.</p>
+        <p class="text-left"><strong>{{recipes.length}}</strong> recipes found for <strong>"{{store.searchQuery()}}"</strong>.</p>
         <div class="recipe-list">
-            @for (recipe of (recipes$ | async); track recipe.id) {
-                <recipe-card class="recipe-card" [recipe]="recipe"></recipe-card>
+            @for (recipe of (recipes$ | async); track recipe.id; let first = $first) {
+                <recipe-card 
+                [category]="recipe.category"
+                [id]="recipe.id"
+                [thumb]="recipe.thumb"
+                [name]="recipe.name"
+                [imageHasPriority]="first"
+                (onDetailClick)="goToDetails($event)"
+                ></recipe-card>
             }
         </div>       
     }

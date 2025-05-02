@@ -1,26 +1,35 @@
-/* You can add global styles to this file, and also import other style files */
-$brand-green: #88BA35;
-$md: 577px;
-$lg: 1000px;
+/*vars*/
+$rf-green: #88BA35;
+$rf-md: 577px;
+$rf-lg: 1000px;
 
-@media (max-width: $md) { // sm breakpoint
+:root {
+    --rf-surface-green:#{$rf-green};
+}
+/*end vars*/
+
+/*mediaquery*/
+@media (max-width: $rf-md) { // sm breakpoint
     .app{
         width: calc(100vw - 10%);
     }
     
 }
 
-@media (min-width: $md) and (max-width: $lg) { // md breakpoint
+@media (min-width: $rf-md) and (max-width: $rf-lg) { // md breakpoint
     .app{
         width: calc(100vw - 20%);
     }
 }
 
-@media (min-width: $lg) { // lg breakpoint
+@media (min-width: $rf-lg) { // lg breakpoint
     .app{
         width: 100vw;
     }
 }
+/*end mediaquery*/
+
+/*generals*/
 html, body { height: 100%; }
 body { 
     margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; 
@@ -48,13 +57,32 @@ h3{
     color: var(--mat-sys-primary);
     margin-bottom: 0;
 }
+
+.tag{
+    padding: 0 .5rem;
+    text-transform: uppercase;
+    letter-spacing: .1rem;
+    font-size: .8rem;
+    font-weight: bold;
+    color: var(--mat-sys-surface-container-lowest);
+    background-color: var(--rf-surface-green);
+}
+.hint{
+    font-size: .8rem;
+}
+.text-left{
+    text-align: left;
+}
+/*end generals*/
+
+/*app styles*/
 .app{
     display: flex;
     flex-direction: column;
     height: 100vh;
     text-align: center;
     margin: 1rem;
-    max-width: $lg;
+    max-width: $rf-lg;
     .app-header{
         display: flex;
         align-items: center;
@@ -63,11 +91,8 @@ h3{
         top: 0;
         z-index: 1000;
         background-color: var(--mat-sys-surface-container-lowest);
-        margin-bottom: 1.5rem;
-        margin-left: -1rem;
-        margin-right: -1rem;
-        padding-left: 1rem;
-        padding-right: 1rem;
+        margin: 0 -1rem 1.5rem -1rem;
+        padding: 0 1rem 0 1rem;
     
         h1 {
     
@@ -78,7 +103,6 @@ h3{
                 border: 1px solid transparent;
                 &:hover{
                     border:1px solid var(--mat-sys-primary);
-        
                 }
                 * {
                     display: flex;
@@ -87,26 +111,16 @@ h3{
         }
     }
 }
-.tag{
-    padding: 0 .5rem;
-    text-transform: uppercase;
-    letter-spacing: .1rem;
-    font-size: .8rem;
-    font-weight: bold;
-    color: var(--mat-sys-surface-container-lowest);
-    background-color: $brand-green;
-}
-.hint{
-    font-size: .8rem;
-}
-.text-left{
-    text-align: left;
-}
+/*end app styles*/
 
 
 
 /* MATERIAL OVERRIDES */
-
+@mixin rf-border-box {
+    border:1px solid var(--mat-sys-outline-variant) !important;
+    background-color: var(--mat-sys-surface-container-lowest) !important;
+    box-shadow: 0px 0px 12px 5px rgba(186,0,92,0.13) !important;
+  }
 .mat-icon.big-icon{
     font-size: 3rem;
     width: 3rem;
@@ -120,16 +134,15 @@ div.mat-mdc-autocomplete-panel{
 }
 .mdc-text-field--filled{
     border-radius: 1rem !important;
-    border:1px solid var(--mat-sys-secondary);
-    background-color: var(--mat-sys-surface-container-lowest) !important;
-    box-shadow: 0px 0px 12px 5px rgba(186,0,92,0.13);
+    @include rf-border-box;
     .mdc-line-ripple::before{
         border: none;
     }
 }
 .mat-mdc-card{
     overflow: hidden;
-    border:1px solid var(--mat-sys-outline-variant) !important;
-    background-color: var(--mat-sys-surface-container-lowest) !important;
-    box-shadow: 0px 0px 12px 5px rgba(186,0,92,0.13) !important;
+    @include rf-border-box;
 }
+
+
+/* END MATERIAL OVERRIDES */

@@ -1,15 +1,14 @@
-import { AsyncPipe, NgOptimizedImage } from '@angular/common';
-import { AfterContentInit, Component, ElementRef, inject } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatCard } from '@angular/material/card';
+import { MatIcon } from '@angular/material/icon';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { map, Observable, tap } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Recipe } from '../../models/recipe.model';
 import { RecipeFinderStore } from '../../store/recipe-finder.store';
-import { MatIcon } from '@angular/material/icon';
-import { MatProgressSpinner } from '@angular/material/progress-spinner';
-import { HeaderComponent } from '../header/header.component';
-import { MatButton, MatIconButton } from '@angular/material/button';
-import { RecipeThumbComponent } from '../recipe-thumb/recipe-thumb.component';
-import { MatCard } from '@angular/material/card';
+import { HeaderComponent } from '../common/header/header.component';
+import { RecipeThumbComponent } from '../common/recipe-thumb/recipe-thumb.component';
 import { RecipeInstructionsPipe } from './recipe-instructions.pipe';
 
 @Component({
@@ -17,7 +16,6 @@ import { RecipeInstructionsPipe } from './recipe-instructions.pipe';
   imports: [AsyncPipe
     , MatIcon
     , RouterModule
-    , MatProgressSpinner
     ,HeaderComponent
     ,MatButton
     ,MatIconButton
@@ -27,6 +25,7 @@ import { RecipeInstructionsPipe } from './recipe-instructions.pipe';
   ],
   templateUrl: './recipe-details.component.html',
   styleUrls: ['./recipe-details.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecipeDetailsComponent {
   recipe$: Observable<Recipe>;

@@ -1,5 +1,5 @@
-import { Component, inject } from '@angular/core';
-import { SearchRecipeComponent } from '../search-recipe/search-recipe.component';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { SearchRecipeComponent } from '../common/search-recipe/search-recipe.component';
 import { RecipeFinderStore } from '../../store/recipe-finder.store';
 import { MatButton } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
@@ -13,7 +13,8 @@ import { MatIcon } from '@angular/material/icon';
     , MatIcon
   ],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrl: './home.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent {
   store = inject(RecipeFinderStore);

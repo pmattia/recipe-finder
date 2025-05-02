@@ -1,0 +1,27 @@
+<mat-form-field>
+    <input #input matInput (keydown.enter)="onSearchRecipe(input.value)" [formControl]="searchInput"
+        [matAutocomplete]="auto" matAutocompleteOrigin [ngModel]="store.searchQuery()">
+
+    <div class="input-actions">
+    @if(store.loading()) {
+    <mat-spinner matSuffix diameter="20"></mat-spinner>
+    }
+    @if (input.value) {
+    <button matSuffix mat-icon-button aria-label="Clear" (click)="onClearQuery()">
+        <mat-icon>close</mat-icon>
+    </button>
+    }
+</div>
+
+    <mat-icon matPrefix fontIcon="search"></mat-icon>
+
+
+    <mat-autocomplete #auto="matAutocomplete">
+        @for (suggestedRecipes of suggestedRecipes$ | async; track suggestedRecipes.id) {
+        <mat-option [value]="suggestedRecipes.name" (onSelectionChange)="onSelectSuggestion(suggestedRecipes)"
+            (click)="onSelectSuggestion(suggestedRecipes)">
+            <span [innerHTML]="suggestedRecipes.name | highlightKeyword:input.value"></span>
+        </mat-option>
+        }
+    </mat-autocomplete>
+</mat-form-field>
