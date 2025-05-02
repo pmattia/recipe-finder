@@ -72,4 +72,5 @@ npx cypress open
 - Components are divided into stateless (UI components) and stateful ones (extending the StatefulComponent class). The goal is to clearly separate dumb and smart components to simplify testing and maintenance.
 - Every text-based search from the user is subject to sanitization to prevent malicious use.
 - Given that API calls are limited, I chose not to use an HTTP client with an interceptor to handle exceptions, but instead to use fetch requests and try-catch blocks to intercept and propagate any HTTP errors through the application state.
+- To decouple the APIs from the business logic of the application, API models are mapped to application models. Only the API service is aware of the API implementation.
 - Test coverage is not complete; only some of the most significant tests in terms of functionality and security have been implemented.
