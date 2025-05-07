@@ -38,7 +38,7 @@ describe('RecipeDetailsResolver', () => {
     
         // Mock the RecipeFinderStore
         const mockStore = TestBed.inject(RecipeFinderStore);
-        spyOn(mockStore, 'getRecipeDetails').and.returnValue(Promise.resolve({
+        spyOn(mockStore, 'getRecipeDetailsAsync').and.returnValue(Promise.resolve({
             id: '123',
             name: 'Test Recipe',
             area: 'Test Area',
